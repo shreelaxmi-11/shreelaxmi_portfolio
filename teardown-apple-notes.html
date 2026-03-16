@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teardown Apple Notes Transcription</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--surface:#f9f9f9;--s2:#f2f2f2;--border:#e8e8e8;--b2:#d0d0d0;--ink:#111;--muted:#666;--dim:#aaa;--good:#1a7f4b;--good-bg:#f0faf5;--good-bd:#a7e0c4;--bad:#b43b1a;--bad-bg:#fff5f2;--bad-bd:#f5c1b0;--fix:#1a4d8f;--fix-bg:#f2f6ff;--fix-bd:#b0c8f5;--warn:#7a5c00;--warn-bg:#fffcf0;--warn-bd:#f0e090}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* MINIMAL NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.94);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:48px}
+.nav-back{display:flex;align-items:center;gap:5px;font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.15s}
+.nav-back:hover{color:var(--ink)}
+.nav-id{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:0.06em}
+.nav-links{display:flex;gap:2px}
+.nav-links button{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;padding:4px 12px;cursor:pointer;border-radius:20px;transition:all 0.15s}
+.nav-links button:hover{color:var(--ink);background:var(--s2)}
+
+/* HERO apple clean */
+.hero{padding-top:48px;border-bottom:1px solid var(--border)}
+.hero-inner{max-width:860px;margin:0 auto;padding:4rem 2.5rem 3rem}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
+.eyebrow-tag{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 9px;border-radius:3px;border:1px solid var(--border);color:var(--muted)}
+.hero-apple{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:20px;background:var(--s2);border:1px solid var(--border)}
+.hero-apple svg{opacity:0.7}
+.hero-apple span{font-size:12px;font-weight:500;color:var(--muted)}
+h1{font-family:'Spectral',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;line-height:1.05;letter-spacing:-0.02em;margin-bottom:1.25rem}
+h1 em{font-style:italic}
+.hero-sub{font-size:16px;color:var(--muted);line-height:1.75;max-width:580px;margin-bottom:2.5rem}
+.verdict-strip{display:flex;gap:10px;flex-wrap:wrap}
+.verdict-pill{display:flex;align-items:center;gap:7px;font-size:13px;padding:7px 14px;border-radius:20px;border:1px solid}
+.verdict-pill.good{background:var(--good-bg);border-color:var(--good-bd);color:var(--good)}
+.verdict-pill.bad{background:var(--bad-bg);border-color:var(--bad-bd);color:var(--bad)}
+.verdict-pill.fix{background:var(--fix-bg);border-color:var(--fix-bd);color:var(--fix)}
+.vdot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* CONTENT */
+.container{max-width:860px;margin:0 auto;padding:0 2.5rem}
+section{padding:4rem 0;border-bottom:1px solid var(--border)}
+.section-label{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);margin-bottom:0.5rem}
+h2{font-family:'Spectral',serif;font-size:2rem;font-weight:300;margin-bottom:2rem}
+h2 em{font-style:italic}
+h3{font-size:14px;font-weight:500;margin-bottom:0.6rem}
+p{color:var(--muted);margin-bottom:1rem;line-height:1.75}p:last-child{margin-bottom:0}
+
+/* Keep teardown-specific styles */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;margin-bottom:2rem}
+.score-card{background:var(--surface);padding:1.25rem;text-align:center;border:1px solid var(--border)}
+.score-label{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-bottom:0.5rem}
+.score-num{font-family:'Spectral',serif;font-size:2.5rem;font-weight:300;line-height:1;margin-bottom:0.25rem}
+.score-desc{font-size:11px;color:var(--muted)}
+.score-good{color:var(--good)}.score-mid{color:var(--warn)}.score-bad{color:var(--bad)}
+.td-row{display:grid;grid-template-columns:220px 1fr;gap:0;margin-bottom:1.5px}
+.td-label{background:var(--surface);border:1px solid var(--border);padding:1.5rem;display:flex;flex-direction:column;justify-content:flex-start;gap:6px}
+.td-title{font-size:13px;font-weight:500;color:var(--ink)}
+.td-status{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px;width:fit-content}
+.status-works{background:var(--good-bg);color:var(--good);border:1px solid var(--good-bd)}
+.status-gap{background:var(--bad-bg);color:var(--bad);border:1px solid var(--bad-bd)}
+.status-partial{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-bd)}
+.td-body{background:var(--bg);border:1px solid var(--border);border-left:none;padding:1.5rem}
+.td-body p{font-size:13px;margin-bottom:0.5rem}
+.detail-tag{display:inline-block;font-family:'Roboto Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin:2px 2px 2px 0;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+.cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin:1.5rem 0}
+.cmp-table th{text-align:left;padding:9px 12px;font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border-bottom:1.5px solid var(--ink)}
+.cmp-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--muted);line-height:1.5}
+.cmp-table tr:hover td{background:var(--surface)}
+.cmp-table td:first-child{font-weight:500;color:var(--ink);font-family:'Roboto Mono',monospace;font-size:10px;white-space:nowrap}
+.cell-good{color:var(--good)!important;font-weight:500!important}
+.cell-bad{color:var(--bad)!important}
+.fix-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:1.5rem}
+.fix-card{border:1px solid var(--border);border-radius:8px;padding:1.5rem;background:var(--bg)}
+.fix-num{font-family:'Spectral',serif;font-size:2.5rem;color:var(--border);line-height:1;margin-bottom:0.5rem;font-weight:300}
+.fix-title{font-size:14px;font-weight:500;margin-bottom:0.5rem}
+.fix-body{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:1rem}
+.fix-impact{font-size:11px;font-family:'Roboto Mono',monospace;letter-spacing:0.06em}
+.fix-impact span{display:inline-block;padding:2px 8px;border-radius:3px}
+.impact-high{background:var(--fix-bg);color:var(--fix);border:1px solid var(--fix-bd)}
+.impact-med{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-bd)}
+.pm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;margin-top:1.5rem}
+.pm-card{background:var(--surface);padding:1.75rem;border:1px solid var(--border)}
+.pm-title{font-size:13px;font-weight:500;margin-bottom:0.5rem}
+.pm-body{font-size:13px;color:var(--muted);line-height:1.65}
+footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;background:var(--surface)}
+.footer-note{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--dim)}
+@media(max-width:700px){.td-row{grid-template-columns:1fr}.td-body{border-left:1px solid var(--border);border-top:none}nav{padding:0 1.25rem}.nav-links{display:none}.container{padding:0 1.25rem}}
+
+.co-logos{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:1.5rem;min-height:28px}
+.co-logo{display:inline-flex;align-items:center;opacity:0.85}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M6.5 3.5L3 7l3.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Portfolio</a>
+  <span class="nav-id">Feature Teardown 03/05</span>
+  <div class="nav-links">
+    <button onclick="document.getElementById('overview').scrollIntoView({behavior:'smooth'})">Overview</button>
+    <button onclick="document.getElementById('what-works').scrollIntoView({behavior:'smooth'})">What works</button>
+    <button onclick="document.getElementById('gaps').scrollIntoView({behavior:'smooth'})">Gaps</button>
+    <button onclick="document.getElementById('fixes').scrollIntoView({behavior:'smooth'})">Fixes</button>
+    <button onclick="document.getElementById('pm-lens').scrollIntoView({behavior:'smooth'})">PM lens</button>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-tag">Feature Teardown</span>
+      <div class="hero-apple">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="none"><path d="M13 9.7C13 7.3 14.5 6.1 14.6 6c-1.2-1.8-3.1-2-3.8-2C9.2 4 7.7 5 6.9 5 6 5 4.7 4 3.3 4 .6 4-1.5 6.3-1.5 9.9c0 2.2.8 4.5 1.9 6 .9 1.3 1.7 2.5 3 2.5 1.2 0 1.6-.4 2.5-.4.9 0 1.2.4 2.1.4 1.3 0 2.2-1.3 3.1-2.6.8-.8 1.1-1.6 1.2-2-.1 0-1-.5-1-2.3L13 9.7ZM10 2C10.6 1.3 11 .3 10.8-.7c-.9.1-2 .7-2.6 1.4C7.6 1.4 7.2 2.4 7.4 3.3c.9.1 1.9-.6 2.5-1.3Z" fill="#666"/></svg>
+        <span>Apple Intelligence · iOS 26</span>
+      </div>
+      <span class="eyebrow-tag">March 2026</span>
+    </div>
+    <h1>Apple Notes Transcription<br><em>&amp; SpeechAnalyzer</em></h1>
+<div class="co-logos">
+  <span class="co-logo"><img src="data:image/png;base64,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" style="height:22px;object-fit:contain;vertical-align:middle;" alt="apple"></span>
+</div>
+
+    <p class="hero-sub">A PM-lens breakdown of Apple's on-device speech-to-text stack in iOS 26 what the product gets right, where it falls short for real users, and what a focused PM would fix first.</p>
+    <div class="verdict-strip">
+      <div class="verdict-pill good"><span class="vdot"></span>3 things that work well</div>
+      <div class="verdict-pill bad"><span class="vdot"></span>4 real gaps</div>
+      <div class="verdict-pill fix"><span class="vdot"></span>3 prioritized fixes</div>
+    </div>
+  </div>
+</div>
+<div class="hero">
+  <div class="hero-eyebrow">
+    <span class="eyebrow-tag">Feature Teardown</span>
+    <span class="eyebrow-tag">Apple Notes · iOS 26</span>
+    <span class="eyebrow-date">March 2026</span>
+  </div>
+  <h1>Apple Notes Transcription<br><em>& SpeechAnalyzer</em></h1>
+  <p class="hero-sub">A PM-lens breakdown of Apple's on-device speech-to-text and AI summarization stack in iOS 26 what the product gets right, where it falls short for real users, and what a focused PM would fix first.</p>
+  <div class="verdict-strip">
+    <div class="verdict-pill good"><span class="verdict-dot"></span>3 things that work well</div>
+    <div class="verdict-pill bad"><span class="verdict-dot"></span>4 real gaps</div>
+    <div class="verdict-pill fix"><span class="verdict-dot"></span>3 prioritized fixes</div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <div class="section-label">01 Feature Overview</div>
+    <h2>What Apple shipped</h2>
+    <p>Apple Notes transcription has two distinct layers. The first is SpeechAnalyzer a new ASR (automatic speech recognition) API introduced in iOS 26 / macOS Tahoe, replacing the older SFSpeechRecognizer from iOS 10. It runs entirely on-device, handles long-form audio (lectures, meetings, calls), and powers Notes, Voice Memos, Journal, and now third-party apps. The second is Apple Intelligence summarization which takes a completed transcript and generates a summary using the on-device LLM (or Private Cloud Compute for more complex requests).</p>
+    <p>These two layers are independently powerful but create interesting friction when combined. The teardown evaluates both.</p>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-label">Speed</div>
+        <div class="score-num score-good">9/10</div>
+        <div class="score-desc">55% faster than Whisper Large-v3 on benchmark tests</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Privacy</div>
+        <div class="score-num score-good">9/10</div>
+        <div class="score-desc">Fully on-device; no audio ever leaves the device</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Language breadth</div>
+        <div class="score-num score-mid">5/10</div>
+        <div class="score-desc">Transcription tied to device language; 8 languages for AI summaries</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Multi-speaker</div>
+        <div class="score-num score-bad">3/10</div>
+        <div class="score-desc">No speaker diarization in Notes; no contact-name labeling</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Long recordings</div>
+        <div class="score-num score-mid">6/10</div>
+        <div class="score-desc">45+ minute recordings frequently fail to transcribe or export</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Developer access</div>
+        <div class="score-num score-good">8/10</div>
+        <div class="score-desc">SpeechAnalyzer open to third-party devs; modular, Swift-native API</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WORKS -->
+<section id="what-works">
+  <div class="container">
+    <div class="section-label">02 What Works Well</div>
+    <h2>Three things Apple got right</h2>
+
+    <div class="td-row">
+      <div class="td-label">
+        <div class="td-title">On-device speed & privacy</div>
+        <span class="td-status status-works">Works well</span>
+      </div>
+      <div class="td-body">
+        <p>SpeechAnalyzer processed a 34-minute 7GB video in 45 seconds in benchmark testing 55% faster than OpenAI's Whisper Large-v3 Turbo model, with no reported quality difference. This is the right technical bet: inference entirely on Apple Silicon, zero round-trip latency, zero audio transmitted externally. For a platform company that markets privacy as a core value proposition, shipping a best-in-class speed number on-device is a meaningful win.</p>
+        <p>The model is stored in a system-wide asset catalog shared across all apps zero app size impact. If any app has already downloaded the model, a newly installed app skips the download entirely. This is thoughtful infrastructure design that reduces the "first run friction" that typically kills adoption of on-device AI features.</p>
+        <span class="detail-tag tag-src">Source: MacRumors benchmark, WWDC25 SpeechAnalyzer session</span>
+      </div>
+    </div>
+
+    <div class="td-row" style="margin-top:1.5px">
+      <div class="td-label">
+        <div class="td-title">Shortcuts + AI pipeline integration</div>
+        <span class="td-status status-works">Works well</span>
+      </div>
+      <div class="td-body">
+        <p>Apple opened the SpeechAnalyzer API to third-party developers in iOS 26, and the integration with Shortcuts is genuinely powerful. Users can build automations like: record a lecture → transcribe → compare to existing notes → extract missed key points. This makes transcription a composable building block rather than a dead-end Notes feature. No competitor offers this level of on-device automation chaining for audio.</p>
+        <p>The first-party examples (Notes + Voice Memos + Journal) also show Apple is eating its own cooking the same API developers use is the one powering system apps, which is a credibility signal for the developer ecosystem.</p>
+        <span class="detail-tag tag-src">Source: Apple Newsroom, WWDC25</span>
+      </div>
+    </div>
+
+    <div class="td-row" style="margin-top:1.5px">
+      <div class="td-label">
+        <div class="td-title">Modular API architecture</div>
+        <span class="td-status status-works">Works well</span>
+      </div>
+      <div class="td-body">
+        <p>SpeechAnalyzer uses a module-based design developers attach a SpeechTranscriber module or SpeechDetector module to an analyzer session independently. Modules can be added or removed dynamically mid-session. This is a significant improvement over SFSpeechRecognizer's monolithic design, which forced all-or-nothing configuration. The Swift-native async/await design also makes it easier to build real-time streaming transcription UIs without complex callback chains.</p>
+        <span class="detail-tag tag-src">Source: Apple Developer Documentation, WWDC25 session 277</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAPS -->
+<section id="gaps">
+  <div class="container">
+    <div class="section-label">03 Real Gaps</div>
+    <h2>Where the product falls short</h2>
+
+    <div class="td-row">
+      <div class="td-label">
+        <div class="td-title">Language locked to device language</div>
+        <span class="td-status status-gap">Critical gap</span>
+      </div>
+      <div class="td-body">
+        <p>Transcription only works in the language the device is set to. A Colombian user living in Germany with their phone set to English cannot transcribe a German-language lecture they must change their entire device language, which affects Siri, keyboard, and system UI. This is a fundamental UX failure for multilingual users, and Apple community forums are full of frustrated reports about this exact issue.</p>
+        <p>Samsung Transcript Assist handles this cleanly: users choose the recording language independently of device language at transcription time. Apple's design forces a global setting change for what should be a per-recording preference.</p>
+        <span class="detail-tag tag-src">Source: Apple Community forums, multiple threads Sept–Oct 2025</span>
+        <span class="detail-tag tag-src">Source: Apple Support device language requirement confirmed</span>
+      </div>
+    </div>
+
+    <div class="td-row" style="margin-top:1.5px">
+      <div class="td-label">
+        <div class="td-title">No speaker diarization in Notes</div>
+        <span class="td-status status-gap">Critical gap</span>
+      </div>
+      <div class="td-body">
+        <p>Apple Notes transcription does not identify or label individual speakers. For the primary use case recording a meeting or lecture this means the entire transcript is a flat monologue with no way to know who said what. Samsung Transcript Assist labels speakers by contact name. Google Recorder labels speakers generically (Speaker 1, Speaker 2). Apple has no speaker attribution at all in the Notes flow.</p>
+        <p>Notably, the SpeechAnalyzer API itself does not expose speaker diarization as a capability this isn't a missing UI element, it's a missing model capability. Argmax's competing WhisperKit does offer speaker recognition. This is a gap at the infrastructure level, not just the product layer.</p>
+        <span class="detail-tag tag-src">Source: Argmax SpeechAnalyzer vs WhisperKit comparison</span>
+      </div>
+    </div>
+
+    <div class="td-row" style="margin-top:1.5px">
+      <div class="td-label">
+        <div class="td-title">Long recording failures</div>
+        <span class="td-status status-gap">Reliability gap</span>
+      </div>
+      <div class="td-body">
+        <p>Recordings of 45–60 minutes or longer frequently fail to transcribe, fail to export, or silently disappear from Notes. This is a documented bug across Apple community forums with multiple reports from journalists, researchers, and academics exactly the power users who most need long-form transcription. Users describe workarounds like setting timers to restart recording every 30 minutes, or screen-recording the playback to capture audio.</p>
+        <p>A feature positioned as a productivity tool for meetings and lectures that fails on meetings longer than 45 minutes has a fundamental product-market fit problem. The core use case is broken for the users with the highest need.</p>
+        <span class="detail-tag tag-src">Source: Apple Community forums, multiple threads 2024–2025</span>
+      </div>
+    </div>
+
+    <div class="td-row" style="margin-top:1.5px">
+      <div class="td-label">
+        <div class="td-title">No custom vocabulary</div>
+        <span class="td-status status-partial">Partial gap</span>
+      </div>
+      <div class="td-body">
+        <p>SpeechAnalyzer dropped custom vocabulary support that existed in the older SFSpeechRecognizer. This matters for domain-specific use cases medical terminology, legal jargon, company-specific product names, or even a podcast show name like "AppStories" (reported to be transcribed as two words in early tests). Argmax's analysis confirms SpeechAnalyzer is measurably less accurate than SFSpeechRecognizer on custom keywords, and their WhisperKit significantly outperforms both with custom vocabulary enabled.</p>
+        <p>For general consumer use this is minor. For enterprise or professional segments (doctors, lawyers, journalists), it's a dealbreaker that keeps them on third-party tools.</p>
+        <span class="detail-tag tag-src">Source: Argmax blog, SpeechAnalyzer vs WhisperKit comparison</span>
+      </div>
+    </div>
+
+    <!-- Competitor comparison -->
+    <h3 style="margin-top:2.5rem;margin-bottom:1rem">Head-to-head: transcription gaps by competitor</h3>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>Apple Notes (iOS 26)</th>
+          <th>Samsung Transcript Assist</th>
+          <th>Google Pixel Recorder</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>On-device inference</td>
+          <td class="cell-good">✓ Fully on-device</td>
+          <td>Hybrid (cloud for summary)</td>
+          <td class="cell-good">✓ Fully on-device</td>
+        </tr>
+        <tr>
+          <td>Language selection</td>
+          <td class="cell-bad">Device language only</td>
+          <td class="cell-good">Per-recording language choice</td>
+          <td>English-first; limited</td>
+        </tr>
+        <tr>
+          <td>Speaker labeling</td>
+          <td class="cell-bad">None</td>
+          <td class="cell-good">By contact name</td>
+          <td>Generic labels (Speaker 1, 2); user can rename; US English only</td>
+        </tr>
+        <tr>
+          <td>Transcript translation</td>
+          <td class="cell-bad">Not available</td>
+          <td class="cell-good">17 language variants</td>
+          <td class="cell-bad">Not available</td>
+        </tr>
+        <tr>
+          <td>Long recording reliability</td>
+          <td class="cell-bad">Fails at 45+ min (reported)</td>
+          <td>3-hour file cap; generally stable</td>
+          <td class="cell-good">Stable; expanded token support on Pixel 9+</td>
+        </tr>
+        <tr>
+          <td>Custom vocabulary</td>
+          <td class="cell-bad">Removed in SpeechAnalyzer</td>
+          <td>N/A</td>
+          <td>N/A (LoRA fine-tuning handles domain)</td>
+        </tr>
+        <tr>
+          <td>Developer API</td>
+          <td class="cell-good">SpeechAnalyzer (iOS 26, open)</td>
+          <td>Limited partner APIs</td>
+          <td class="cell-good">ML Kit GenAI APIs (public)</td>
+        </tr>
+        <tr>
+          <td>AI summary languages</td>
+          <td>8 languages</td>
+          <td class="cell-good">22 Galaxy AI languages</td>
+          <td>English-first</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FIXES -->
+<section id="fixes">
+  <div class="container">
+    <div class="section-label">04 Prioritized Fixes</div>
+    <h2>If I owned this feature</h2>
+    <p>Ranked by user impact × technical feasibility. Not wishlist these are changes a PM with engineering budget could ship in 2–3 quarters.</p>
+
+    <div class="fix-grid">
+      <div class="fix-card">
+        <div class="fix-num">01</div>
+        <div class="fix-title">Per-recording language selection</div>
+        <div class="fix-body">Decouple transcription language from device language. Add a language picker at the point of transcription (not recording) matching Samsung's UX. The SpeechAnalyzer API already accepts a locale parameter; this is a UI and product decision, not an ML problem. No new model training required. Direct fix for the most-reported user complaint in the Apple forums, and a win for every multilingual user globally.</div>
+        <div class="fix-impact"><span class="impact-high">High impact · Low effort</span></div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-num">02</div>
+        <div class="fix-title">Long recording chunking & reliability</div>
+        <div class="fix-body">Implement automatic chunking for recordings over 30 minutes split into overlapping segments, transcribe independently, stitch with deduplication. This is a known engineering pattern (used by Whisper-based tools) and resolves the most critical reliability gap. Also fix the export bug for large files separately as a hotfix. A productivity feature that silently eats an hour-long interview is a trust-destroying experience.</div>
+        <div class="fix-impact"><span class="impact-high">High impact · Medium effort</span></div>
+      </div>
+      <div class="fix-card">
+        <div class="fix-num">03</div>
+        <div class="fix-title">Speaker diarization in Notes</div>
+        <div class="fix-body">Add speaker segmentation to the SpeechAnalyzer model at minimum generic "Speaker A / Speaker B" labels, with a second phase matching against Contacts for named attribution (as Samsung does). This requires model-level work and is a larger investment, but it's the single feature that makes the difference between a student transcript tool and a professional meeting tool. The Contacts matching is a meaningful privacy differentiator all on-device, no cloud lookup.</div>
+        <div class="fix-impact"><span class="impact-med">High impact · High effort</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PM LENS -->
+<section id="pm-lens">
+  <div class="container">
+    <div class="section-label">05 PM Lens</div>
+    <h2>Strategic observations</h2>
+    <div class="pm-grid">
+      <div class="pm-card">
+        <div class="pm-title">The infrastructure is exceptional; the product layer is unfinished</div>
+        <div class="pm-body">SpeechAnalyzer is genuinely impressive engineering fastest on-device ASR available, modular, open to developers, zero storage overhead. The product built on top of it in Notes is significantly behind. Apple shipped a Ferrari engine with a bicycle frame. The fixes required are largely product and UX decisions, not new ML work.</div>
+      </div>
+      <div class="pm-card">
+        <div class="pm-title">Apple is winning on platform, not product</div>
+        <div class="pm-body">The Shortcuts integration and third-party developer API are the real strategic moves here not the Notes feature itself. Apple is positioning SpeechAnalyzer as an ecosystem capability that developers build on, not a terminal consumer feature. This is the right long-term bet, but it means the first-party Notes experience suffers from underinvestment while platform is prioritized.</div>
+      </div>
+      <div class="pm-card">
+        <div class="pm-title">The language gap is a global market problem</div>
+        <div class="pm-body">Tying transcription to device language means Apple's feature effectively doesn't work for hundreds of millions of multilingual users expats, international students, global business travelers. Samsung's 22-language support isn't just a feature count competition; it's a meaningful market reach advantage. Apple's device-language constraint is a product choice masquerading as a technical constraint.</div>
+      </div>
+      <div class="pm-card">
+        <div class="pm-title">Reliability is a prerequisite, not a nice-to-have</div>
+        <div class="pm-body">A journalist who loses an hour-long interview because Notes silently failed to transcribe it will not use the feature again. The long recording failure bug is category-defining: it is the primary use case for which the feature was marketed. Shipping a 45-minute cliff-edge on a feature positioned for "meetings and lectures" suggests the feature shipped before adequate real-world testing. Fix this before adding any new capabilities.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <span class="footer-note">Teardown · Apple Notes + SpeechAnalyzer · iOS 26</span>
+  <span class="footer-note">Sources: Apple Developer Docs · WWDC25 · Apple Community Forums · MacRumors · Argmax · March 2026</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI PM Portfolio On-Device Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Editorial+New:ital,wght@0,300;0,400;1,300;1,400&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #f2f0eb;
+  --muted: #888480;
+  --dim: #3a3836;
+  --accent: #e8d5a3;
+  --accent2: #c4a882;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* GRAIN OVERLAY */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;opacity:0.6
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,8,8,0.88);backdrop-filter:blur(14px);
+}
+.nav-name{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)
+}
+.nav-role{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--dim);letter-spacing:0.08em
+}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:0 2.5rem 4rem;
+  position:relative;z-index:1;
+}
+.hero-kicker{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-kicker::before{content:'';display:inline-block;width:40px;height:1px;background:var(--accent)}
+h1{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(2.8rem,7vw,6.5rem);
+  font-weight:300;line-height:1.04;
+  letter-spacing:-0.02em;
+  margin-bottom:2rem;max-width:1000px;
+}
+h1 strong{font-weight:600}
+h1 .line-accent{
+  display:block;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--text) 60%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero-desc{
+  font-size:15px;color:var(--muted);max-width:480px;
+  line-height:1.75;margin-bottom:3rem;
+}
+.hero-companies{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  padding:1.25rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.company-logo{
+  display:flex;align-items:center;gap:8px;
+  opacity:0.4;transition:opacity 0.2s;
+  font-size:12px;color:var(--muted);
+  font-family:'DM Mono',monospace;letter-spacing:0.06em
+}
+.company-logo:hover{opacity:0.85}
+.company-logo svg{flex-shrink:0}
+
+/* WORK SECTION */
+.work{padding:6rem 2.5rem;position:relative;z-index:1}
+.work-header{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:3rem;gap:2rem;
+}
+.work-label{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--dim)
+}
+.work-count{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(1.4rem,3vw,2.5rem);font-weight:300;
+  color:var(--text)
+}
+
+/* CARDS GRID */
+.cards{display:flex;flex-direction:column;gap:1.5px}
+
+.card{
+  display:grid;grid-template-columns:80px 1fr auto;
+  background:var(--surface);
+  transition:background 0.2s;
+  cursor:pointer;text-decoration:none;color:inherit;
+  position:relative;overflow:hidden;
+}
+.card:hover{background:var(--surface2)}
+.card::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform 0.25s ease;
+}
+.card:hover::after{transform:scaleY(1)}
+.card-num{
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:2.25rem 0 2.25rem;
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:0.12em;color:var(--dim);border-right:1px solid var(--border)
+}
+.card-body{padding:2rem 2rem 2rem 2.25rem}
+.card-type{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  margin-bottom:0.6rem
+}
+.card-title{
+  font-family:'Unbounded',sans-serif;font-size:1.15rem;
+  font-weight:400;line-height:1.2;margin-bottom:0.75rem;
+  letter-spacing:-0.01em
+}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.65;max-width:600px}
+.card-logos{
+  display:flex;align-items:center;gap:10px;margin-top:1.25rem;
+  flex-wrap:wrap
+}
+.brand-chip{
+  display:flex;align-items:center;gap:5px;
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;border:1px solid;
+  transition:opacity 0.15s
+}
+.card-meta{
+  display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-start;
+  padding:2rem 2rem 2rem 0;gap:8px
+}
+.meta-arrow{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border2);color:var(--dim);
+  transition:all 0.2s;
+}
+.card:hover .meta-arrow{border-color:rgba(255,255,255,0.3);color:var(--text)}
+.tool-chips{display:flex;flex-direction:column;gap:5px;align-items:flex-end;margin-top:0.5rem}
+.tool-chip{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.08em;color:var(--dim);
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  padding:2px 7px;border-radius:2px;white-space:nowrap
+}
+
+/* Card accent colors */
+.card-01::after{background:linear-gradient(180deg,#4e6be0,#34c97a,#b0b0b0)}
+.card-02::after{background:linear-gradient(180deg,#E50914,#00A8E1)}
+.card-03::after{background:#a3a3a3}
+.card-04::after{background:#4285f4}
+.card-05::after{background:linear-gradient(180deg,#E50914,#4285f4)}
+
+/* Card type colors */
+.type-case{color:#e8c97a}.type-prd{color:#f87171}.type-tear{color:#94a3b8}
+.type-prio{color:#60a5fa}.type-dash{color:#34d399}
+
+/* Brand chips */
+.chip-samsung{background:rgba(78,107,224,0.1);border-color:rgba(78,107,224,0.25);color:#7b9ff0}
+.chip-google{background:rgba(66,133,244,0.1);border-color:rgba(66,133,244,0.25);color:#74a7ff}
+.chip-apple{background:rgba(180,180,180,0.08);border-color:rgba(180,180,180,0.2);color:#b8b5b0}
+.chip-netflix{background:rgba(229,9,20,0.1);border-color:rgba(229,9,20,0.25);color:#ff6b6b}
+.chip-amazon{background:rgba(255,153,0,0.1);border-color:rgba(255,153,0,0.25);color:#ffb347}
+
+/* ABOUT STRIP */
+.about-strip{
+  border-top:1px solid var(--border);
+  padding:4rem 2.5rem;
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:3rem;position:relative;z-index:1
+}
+.about-item{}
+.about-label{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:0.6rem
+}
+.about-value{font-size:14px;color:var(--muted);line-height:1.65}
+.about-value strong{color:var(--text);font-weight:500;display:block;margin-bottom:0.25rem}
+
+footer{
+  border-top:1px solid var(--border);padding:1.75rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;position:relative;z-index:1
+}
+.footer-text{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:0.08em}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card{animation:fadeUp 0.4s ease both}
+.card:nth-child(1){animation-delay:0.05s}
+.card:nth-child(2){animation-delay:0.10s}
+.card:nth-child(3){animation-delay:0.15s}
+.card:nth-child(4){animation-delay:0.20s}
+.card:nth-child(5){animation-delay:0.25s}
+
+@media(max-width:700px){
+  h1{font-size:2.4rem}
+  .card{grid-template-columns:1fr}
+  .card-num{display:none}
+  .card-meta{flex-direction:row;align-items:center;padding:0 1.25rem 1.5rem;justify-content:space-between}
+  .tool-chips{flex-direction:row;align-items:center}
+  .about-strip{grid-template-columns:1fr}
+  nav{padding:1rem 1.25rem}
+  .hero,.work{padding-left:1.25rem;padding-right:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">AI PM Portfolio</span>
+  <span class="nav-role">On-Device Intelligence · 2024–2026</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Selected work</div>
+  <h1>
+    Product thinking<br>
+    on <strong>on-device</strong>
+    <span class="line-accent">AI</span>
+  </h1>
+  <p class="hero-desc">5 artifacts examining how Samsung, Google, Apple, Netflix, and Amazon build AI that runs on your device analysed through competitive, product, and engineering lenses.</p>
+
+  <!-- Company logos -->
+  <div class="hero-companies">
+    <!-- Samsung -->
+    <div class="company-logo">
+      <svg width="72" height="14" viewBox="0 0 72 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="11" font-family="Arial" font-size="11" font-weight="bold" fill="#4e6be0" letter-spacing="1">SAMSUNG</text>
+      </svg>
+    </div>
+    <!-- Google -->
+    <div class="company-logo">
+      <svg width="52" height="18" viewBox="0 0 52 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="13" font-family="Arial" font-size="13" fill="#4285f4">G</text>
+        <text x="10" y="13" font-family="Arial" font-size="13" fill="#ea4335">o</text>
+        <text x="19" y="13" font-family="Arial" font-size="13" fill="#fbbc04">o</text>
+        <text x="28" y="13" font-family="Arial" font-size="13" fill="#4285f4">g</text>
+        <text x="37" y="13" font-family="Arial" font-size="13" fill="#34a853">l</text>
+        <text x="43" y="13" font-family="Arial" font-size="13" fill="#ea4335">e</text>
+      </svg>
+    </div>
+    <!-- Apple -->
+    <div class="company-logo">
+      <svg width="44" height="18" viewBox="0 0 44 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 3C10 3 8.5 3.2 7.8 4.5C7.1 5.8 7.4 7.2 7.4 7.2C7.4 7.2 8.9 7.4 9.9 6C10.9 4.6 10 3 10 3Z" fill="#d1d5db"/>
+        <path d="M9.5 7.5C8 7.5 6 8.8 6 11.2C6 13.6 7.8 15.5 8.8 15.5C9.5 15.5 9.9 15.1 10.8 15.1C11.7 15.1 12 15.5 12.9 15.5C13.9 15.5 15.2 13.8 15.8 12C15 11.6 14 10.7 14 9.3C14 8.1 14.8 7.4 14.8 7.4C14.1 6.6 13.1 6.5 12.6 6.5C11.4 6.5 10.3 7.5 9.5 7.5Z" fill="#d1d5db"/>
+        <text x="20" y="13" font-family="Arial" font-size="11" font-weight="bold" fill="#9ca3af" letter-spacing="0.5">Apple</text>
+      </svg>
+    </div>
+    <!-- Netflix -->
+    <div class="company-logo">
+      <svg width="52" height="18" viewBox="0 0 52 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="2" width="3" height="14" fill="#E50914"/>
+        <path d="M3 2L9 14V2H12V16H9L3 4V16H0V2H3Z" fill="#E50914"/>
+        <text x="15" y="13" font-family="Arial" font-size="11" font-weight="bold" fill="#E50914" letter-spacing="0.5">etflix</text>
+      </svg>
+    </div>
+    <!-- Amazon -->
+    <div class="company-logo">
+      <svg width="64" height="18" viewBox="0 0 64 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="13" font-family="Arial" font-size="11" fill="#ff9900" letter-spacing="0.5">amazon</text>
+        <path d="M4 16 Q18 19 32 16" stroke="#ff9900" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div class="work">
+  <div class="work-header">
+    <div>
+      <div class="work-label">Portfolio</div>
+      <div class="work-count">5 pieces of work</div>
+    </div>
+  </div>
+
+  <div class="cards">
+
+    <!-- 01: Case Study -->
+    <a href="on-device-ai-case-study.html" class="card card-01">
+      <div class="card-num">01</div>
+      <div class="card-body">
+        <div class="card-type type-case">Competitive Case Study</div>
+        <div class="card-title">On-Device AI Samsung vs Google vs Apple</div>
+        <div class="card-desc">Side-by-side analysis of voice transcription and on-device LLM/summarization across Galaxy AI, Gemini Nano, and Apple Intelligence. Covers execution models, privacy architecture, developer APIs, and strategic tradeoffs.</div>
+        <div class="card-logos">
+          <span class="brand-chip chip-samsung">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#4e6be0"/></svg>
+            Samsung
+          </span>
+          <span class="brand-chip chip-google">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#4285f4"/></svg>
+            Google Pixel
+          </span>
+          <span class="brand-chip chip-apple">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#9ca3af"/></svg>
+            Apple
+          </span>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tool-chips">
+          <span class="tool-chip">Transcript Assist</span>
+          <span class="tool-chip">Gemini Nano</span>
+          <span class="tool-chip">SpeechAnalyzer</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- 02: PRD -->
+    <a href="prd-ondevice-recommendations.html" class="card card-02">
+      <div class="card-num">02</div>
+      <div class="card-body">
+        <div class="card-type type-prd">Product Requirements Document</div>
+        <div class="card-title">On-Device Recommendations Netflix × Amazon</div>
+        <div class="card-desc">Full PRD for LocalLens a lightweight on-device recommendation layer for streaming platforms. Covers problem framing, solution architecture (two-tower model + federated learning), user stories, success metrics, risks, and 18-month roadmap.</div>
+        <div class="card-logos">
+          <span class="brand-chip chip-netflix">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#E50914"/></svg>
+            Netflix
+          </span>
+          <span class="brand-chip chip-amazon">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#ff9900"/></svg>
+            Amazon Prime
+          </span>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tool-chips">
+          <span class="tool-chip">ONNX Runtime</span>
+          <span class="tool-chip">TFLite</span>
+          <span class="tool-chip">Federated Learning</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- 03: Teardown -->
+    <a href="teardown-apple-notes.html" class="card card-03">
+      <div class="card-num">03</div>
+      <div class="card-body">
+        <div class="card-type type-tear">Feature Teardown</div>
+        <div class="card-title">Apple Notes Transcription + SpeechAnalyzer</div>
+        <div class="card-desc">PM-lens breakdown of Apple's on-device ASR stack in iOS 26. Scores 6 dimensions, surfaces 4 verified gaps (including the language-lock problem and long recording failures), and gives 3 prioritised fixes with effort/impact ratings.</div>
+        <div class="card-logos">
+          <span class="brand-chip chip-apple">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#9ca3af"/></svg>
+            Apple Intelligence
+          </span>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tool-chips">
+          <span class="tool-chip">SpeechAnalyzer</span>
+          <span class="tool-chip">iOS 26</span>
+          <span class="tool-chip">Private Cloud Compute</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- 04: Prioritization -->
+    <a href="prioritization-gemini-nano.html" class="card card-04">
+      <div class="card-num">04</div>
+      <div class="card-body">
+        <div class="card-type type-prio">Feature Prioritization</div>
+        <div class="card-title">Gemini Nano Backlog Google Pixel</div>
+        <div class="card-desc">Stack-ranked backlog of 8 features for Google Pixel's Gemini Nano roadmap, scored on Impact × Strategic fit × Feasibility. Includes explicit tradeoffs, what the ranking deprioritises, and 3 open product decisions with recommendations.</div>
+        <div class="card-logos">
+          <span class="brand-chip chip-google">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#4285f4"/></svg>
+            Google Pixel
+          </span>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tool-chips">
+          <span class="tool-chip">Gemini Nano v3</span>
+          <span class="tool-chip">AICore</span>
+          <span class="tool-chip">ICE Framework</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- 05: Metrics -->
+    <a href="metrics-locallens.html" class="card card-05">
+      <div class="card-num">05</div>
+      <div class="card-body">
+        <div class="card-type type-dash">Live Metrics Dashboard</div>
+        <div class="card-title">LocalLens On-Device Rec. Success Metrics</div>
+        <div class="card-desc">Interactive dashboard tracking 8 metrics (North Star, Primary, Guardrail) for the LocalLens PRD. Includes live Chart.js visualisations, a signal health table, and a what-if scenario simulator for modelling Phase 2 exit readiness.</div>
+        <div class="card-logos">
+          <span class="brand-chip chip-netflix">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#E50914"/></svg>
+            Netflix
+          </span>
+          <span class="brand-chip chip-amazon">
+            <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3.5" fill="#ff9900"/></svg>
+            Amazon Prime
+          </span>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="meta-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tool-chips">
+          <span class="tool-chip">Chart.js</span>
+          <span class="tool-chip">Federated ML</span>
+          <span class="tool-chip">A/B Testing</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-item">
+    <div class="about-label">Focus area</div>
+    <div class="about-value">
+      <strong>On-Device AI · Product Management</strong>
+      Competitive analysis, PRDs, feature teardowns, prioritisation frameworks, and metrics design across Samsung, Google, and Apple.
+    </div>
+  </div>
+  <div class="about-item">
+    <div class="about-label">Background</div>
+    <div class="about-value">
+      <strong>Samsung Galaxy AI · Purdue MEM</strong>
+      Galaxy S24 launch · Transcript Assist · Agent Builder · On-device inference · Available May 2026
+    </div>
+  </div>
+  <div class="about-item">
+    <div class="about-label">Target roles</div>
+    <div class="about-value">
+      <strong>AI PM · L4 · Google</strong>
+      Targeting on-device AI, LLM product, and mobile intelligence roles at top-tier technology companies.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-text">On-Device AI Portfolio · Verified March 2026</span>
+  <span class="footer-text">Samsung · Google · Apple · Netflix · Amazon</span>
+</footer>
+
+</body>
+</html>
