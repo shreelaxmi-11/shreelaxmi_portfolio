@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shreelaxmi Ganesh Product Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ee;--surface:#fff;--surface2:#ede9e2;
+  --border:#ddd8ce;--border2:#c8c2b6;
+  --ink:#1a1612;--muted:#6b6158;--dim:#b0a898;
+  --navy:#1b2a4a;--navy2:#253663;
+  --sage:#2d6a4f;--sage-l:#52b788;--sage-p:rgba(45,106,79,0.08);
+  --gold:#b5850a;--gold-p:rgba(181,133,10,0.1);
+  --rust:#b5451b;--rust-p:rgba(181,69,27,0.08);
+  --purdue:#CEB888;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-size:15px;line-height:1.65;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:50px;
+  background:rgba(246,243,238,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-initials{
+  font-family:'Courier Prime',monospace;font-size:12px;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+}
+.nav-links{display:flex;gap:2px}
+.nav-links button{
+  font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--muted);background:none;border:none;
+  padding:5px 14px;cursor:pointer;border-radius:2px;transition:all 0.15s;
+}
+.nav-links button:hover{color:var(--ink);background:var(--surface2)}
+.nav-cta{
+  font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:0.1em;
+  text-transform:uppercase;padding:7px 16px;border:1.5px solid var(--navy);
+  color:var(--navy);text-decoration:none;border-radius:2px;transition:all 0.2s;
+}
+.nav-cta:hover{background:var(--navy);color:var(--bg)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:grid;grid-template-columns:55% 45%;
+  padding-top:50px;
+}
+.hero-left{
+  padding:5rem 3rem 4rem;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-right{
+  padding:5rem 3rem 4rem;
+  background:var(--navy);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,7vw,7rem);
+  font-weight:300;line-height:0.98;letter-spacing:-0.02em;
+  margin-bottom:1.25rem;
+}
+h1 .ln{display:block;color:var(--ink)}
+h1 .li{display:block;font-style:italic;color:var(--sage)}
+.hero-role{
+  font-family:'Courier Prime',monospace;font-size:12px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:2.5rem;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-role::before{content:'';display:block;width:28px;height:1px;background:var(--sage)}
+.stat-row{display:flex;gap:2.5rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--border)}
+.snum{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:500;line-height:1;color:var(--ink)}
+.slbl{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+
+/* right panel */
+.avail{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Courier Prime',monospace;font-size:11px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--purdue);padding:7px 14px;
+  background:rgba(206,184,136,0.1);border:1px solid rgba(206,184,136,0.25);
+  border-radius:2px;margin-bottom:2rem;width:fit-content;
+}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:var(--purdue);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.focus-lbl{
+  font-family:'Courier Prime',monospace;font-size:10px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);margin-bottom:1rem;
+}
+.focus-list{display:flex;flex-direction:column;gap:7px;margin-bottom:2.5rem}
+.focus-item{
+  display:flex;align-items:center;gap:10px;font-size:13px;
+  color:rgba(255,255,255,0.55);padding:9px 12px;
+  border:1px solid rgba(255,255,255,0.08);border-radius:2px;
+}
+.fdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.clink-row{display:flex;gap:14px;flex-wrap:wrap;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1)}
+.clink{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Courier Prime',monospace;font-size:11px;
+  letter-spacing:0.06em;color:rgba(255,255,255,0.35);
+  text-decoration:none;transition:color 0.15s;
+}
+.clink:hover{color:rgba(255,255,255,0.9)}
+
+/* ── SHARED ── */
+.wrap{position:relative;z-index:1}
+.inner{max-width:1200px;margin:0 auto;padding:0 3rem}
+.sec-head{display:flex;align-items:baseline;gap:1.5rem;padding:4.5rem 0 3rem;border-bottom:1px solid var(--border);margin-bottom:0}
+.sec-kick{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim)}
+h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300}
+h2 em{font-style:italic;color:var(--sage)}
+
+/* ══ HORIZONTAL TIMELINE ══ */
+#timeline{padding-bottom:5rem;background:var(--surface)}
+.htl-scroll{overflow-x:auto;padding:0 3rem 2rem;-webkit-overflow-scrolling:touch}
+.htl{
+  display:flex;
+  min-width:max-content;
+  position:relative;
+  padding-top:3.5rem;
+  padding-bottom:2rem;
+}
+/* the horizontal line */
+.htl::before{
+  content:'';position:absolute;
+  top:3.5rem;left:0;right:0;
+  height:1px;background:var(--border);
+  z-index:0;
+}
+
+.htl-node{
+  display:flex;flex-direction:column;align-items:flex-start;
+  position:relative;
+  padding-right:4rem;
+  min-width:220px;
+  max-width:280px;
+}
+.htl-node:last-child{padding-right:0}
+
+/* dot on the line */
+.htl-dot{
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid;background:var(--bg);
+  position:absolute;top:-5.5px;left:0;
+  z-index:1;
+}
+
+/* year label above line */
+.htl-year{
+  position:absolute;top:-2.8rem;left:0;
+  font-family:'Courier Prime',monospace;
+  font-size:11px;letter-spacing:0.1em;
+  color:var(--ink);white-space:nowrap;
+}
+.htl-year span{display:block;font-size:9px;color:var(--muted);letter-spacing:0.06em}
+
+/* content below line */
+.htl-content{
+  margin-top:1.75rem;
+  display:flex;flex-direction:column;gap:10px;
+}
+.htl-logo{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  min-height:36px;
+}
+.htl-co{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:500;line-height:1.1;
+}
+.htl-role{
+  font-family:'Courier Prime',monospace;font-size:9px;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;
+  border:1px solid var(--border2);color:var(--muted);
+  background:var(--surface2);width:fit-content;
+}
+.htl-tools{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.tool{
+  font-family:'Courier Prime',monospace;font-size:10px;
+  letter-spacing:0.04em;padding:3px 8px;
+  border-radius:2px;border:1px solid var(--border);
+  color:var(--muted);background:var(--bg);
+  display:flex;align-items:center;gap:5px;
+}
+.tool img{height:12px;width:auto;object-fit:contain;opacity:0.7}
+
+/* samsung nested */
+.htl-samsung-subs{display:flex;flex-direction:column;gap:12px;margin-top:6px;padding-left:12px;border-left:1px solid var(--border)}
+.samsung-sub-yr{font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);letter-spacing:0.06em;margin-bottom:3px}
+
+/* graduation node special */
+.htl-node.grad .htl-dot{border-color:var(--purdue);background:var(--purdue);width:16px;height:16px;top:-7.5px}
+.htl-node.grad .htl-year{color:var(--gold);font-weight:700}
+.htl-node.grad .htl-content{padding:1rem 1.25rem;background:linear-gradient(135deg,rgba(206,184,136,0.07),transparent);border:1px solid rgba(206,184,136,0.2);border-radius:4px}
+
+/* ══ PORTFOLIO CARDS ══ */
+#work{padding:0 0 5rem;background:var(--navy)}
+#work .sec-head{border-bottom-color:rgba(255,255,255,0.1)}
+#work .sec-kick{color:rgba(255,255,255,0.2)}
+#work h2{color:#f0ece3}
+#work h2 em{color:var(--sage-l)}
+.cards-intro{font-size:14px;color:rgba(255,255,255,0.4);max-width:520px;margin:1.5rem 0 2.5rem;line-height:1.75}
+
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px}
+.pcard{
+  position:relative;overflow:hidden;text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;min-height:300px;cursor:pointer;
+  transition:transform 0.25s ease,box-shadow 0.25s ease;
+}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.4);z-index:2}
+.pcard-bg{position:absolute;inset:0;z-index:0}
+.pcard-inner{flex:1;display:flex;flex-direction:column;padding:2rem;position:relative;z-index:1}
+.pcard-type{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1rem;opacity:0.7}
+.pcard-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;line-height:1.25;margin-bottom:0.75rem}
+.pcard-desc{font-size:12px;line-height:1.65;opacity:0.6;flex:1}
+.pcard-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1)}
+.pcard-tag{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;opacity:0.45}
+.pcard-arrow{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.1);transition:all 0.2s}
+.pcard:hover .pcard-arrow{background:rgba(255,255,255,0.2);transform:translateX(2px)}
+.card-01 .pcard-bg{background:linear-gradient(135deg,#1a2332,#0f1923)}.card-01{color:#e8e4dc}
+.card-02 .pcard-bg{background:linear-gradient(135deg,#1a0808,#2d0e0e)}.card-02{color:#f0e8e4}
+.card-03 .pcard-bg{background:linear-gradient(135deg,#1a1c20,#252830)}.card-03{color:#e4e6ec}
+.card-04 .pcard-bg{background:linear-gradient(135deg,#0a1628,#0f2040)}.card-04{color:#e8f0fe}
+.card-05 .pcard-bg{background:linear-gradient(135deg,#041a0e,#062a15)}.card-05{color:#d4f5e2}
+.card-wide{grid-column:span 2}
+
+/* SKILLS */
+#skills{padding:5rem 0;background:var(--surface)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5px}
+.sk-card{background:var(--bg);padding:1.6rem;border:1px solid var(--border)}
+.sk-lbl{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:12px;color:var(--muted);padding:4px 9px;border-radius:2px;border:1px solid var(--border);transition:all 0.14s;cursor:default}
+.tag:hover{color:var(--ink);border-color:var(--border2)}
+.cert-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)}
+.cert{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.06em;padding:7px 13px;border-radius:2px;background:var(--gold-p);border:1px solid rgba(181,133,10,0.2);color:var(--gold)}
+
+footer{background:var(--navy);padding:2.5rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:2px solid var(--sage)}
+.foot-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:#f0ece3}
+.foot-name em{font-style:italic;color:var(--sage-l)}
+.foot-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.foot-links a{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s}
+.foot-links a:hover{color:#f0ece3}
+
+@media(max-width:900px){.pgrid{grid-template-columns:1fr 1fr}.card-wide{grid-column:span 1}}
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr}
+  .hero-left{border-right:none;border-bottom:1px solid var(--border);padding:4rem 1.5rem 3rem}
+  .hero-right{padding:3rem 1.5rem}
+  nav{padding:0 1.5rem}.nav-links{display:none}
+  .inner{padding:0 1.5rem}
+  .pgrid{grid-template-columns:1fr}.card-wide{grid-column:span 1}
+  .htl-scroll{padding:0 1.5rem 2rem}
+  h1{font-size:3.5rem}
+}
+
+.pcard-logos{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;flex-wrap:wrap;min-height:28px}
+.co-logo:hover{opacity:1}
+.htl-logo-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+
+
+.pcard-co{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap}
+.co-tag{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);border-radius:2px}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-initials">S.G.</span>
+  <div class="nav-links">
+    <button onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">Journey</button>
+    <button onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">Portfolio</button>
+    <button onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</button>
+  </div>
+  <a href="mailto:shreelaxmiganesh2001@gmail.com" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <h1>
+      <span class="ln">Shreelaxmi</span>
+      <span class="li">Ganesh.</span>
+    </h1>
+    <div class="hero-role">Product Manager · On-Device AI</div>
+    <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:440px;margin-bottom:2.5rem;padding-left:1.1rem;border-left:2px solid var(--sage)">I love building things whether it's a product, a startup, or a high-impact program. 3+ years of experience shipping on-device LLM and GenAI products at global scale.</p>
+    <div class="stat-row">
+      <div><div class="snum">100M+</div><div class="slbl">Feature shipped · Galaxy S24</div></div>
+      <div><div class="snum">78%</div><div class="slbl">Feature adoption</div></div>
+      <div><div class="snum">3+</div><div class="slbl">Years experience</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="avail"><span class="avail-dot"></span>Open to full-time roles from May 2026</div>
+    <div class="focus-lbl">Currently focused on</div>
+    <div class="focus-list">
+      <div class="focus-item"><span class="fdot" style="background:#4e6be0"></span>On-Device LLM Inference &amp; NPU Pipeline Optimization</div>
+      <div class="focus-item"><span class="fdot" style="background:#52b788"></span>RAG-Based Conversational AI Systems</div>
+      <div class="focus-item"><span class="fdot" style="background:#fbbf24"></span>Hardware–Software Tradeoffs at Scale</div>
+      <div class="focus-item"><span class="fdot" style="background:#e8794e"></span>Edge AI Deployment &amp; Responsible AI</div>
+    </div>
+    <div class="clink-row">
+      <a href="mailto:shreelaxmiganesh2001@gmail.com" class="clink">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4L6.5 8L12 4" stroke="currentColor" stroke-width="1.1"/></svg>Email
+      </a>
+      <a href="https://www.linkedin.com/in/shreelaxmi-ganesh/" target="_blank" class="clink">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3.5 5.5v4M3.5 4v.01M6.5 9.5V7c0-.8.6-1.5 1.5-1.5S9.5 6.2 9.5 7v2.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>LinkedIn
+      </a>
+      <a href="index.html" class="clink">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7.5 3l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>Portfolio →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- HORIZONTAL TIMELINE -->
+<section class="wrap" id="timeline">
+  <div class="inner">
+    <div class="sec-head">
+      <span class="sec-kick">Professional journey</span>
+      <h2>Where I've <em>been</em></h2>
+    </div>
+  </div>
+  <div class="htl-scroll">
+    <div class="htl">
+
+      <!-- NATURES LEAF -->
+      <div class="htl-node">
+        <div class="htl-dot" style="border-color:var(--sage)"></div>
+        <div class="htl-year">May 2020<span>  May 2022</span></div>
+        <div class="htl-content">
+          
+          <div class="htl-co" style="color:var(--sage)">Nature's Leaf</div>
+          <div class="htl-role">Founding PM · D2C Startup</div>
+          <div class="htl-tools">
+            <span class="tool">Shopify</span>
+            <span class="tool">Google Analytics</span>
+            <span class="tool">A/B Testing</span>
+            <span class="tool">Notion</span>
+            <span class="tool">GTM Strategy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAMSUNG -->
+      <div class="htl-node" style="min-width:300px;max-width:340px">
+        <div class="htl-dot" style="border-color:#1428A0;background:#1428A0"></div>
+        <div class="htl-year">2022<span>  2024</span></div>
+        <div class="htl-content">
+          
+          
+          <div class="htl-role" style="color:#4e6be0;border-color:rgba(40,88,201,0.3);background:rgba(40,88,201,0.06)">Galaxy AI · R&amp;D Bangalore</div>
+          <div class="htl-samsung-subs">
+            <div>
+              <div class="samsung-sub-yr">Summer 2022 · Internship</div>
+              <div class="htl-tools">
+                <span class="tool">SQL</span><span class="tool">Jira</span><span class="tool">Telemetry Analysis</span><span class="tool">PRD Writing</span>
+              </div>
+            </div>
+            <div>
+              <div class="samsung-sub-yr">Aug 2023 – Aug 2024 · PM I</div>
+              <div class="htl-tools">
+                <span class="tool">Exynos AI Studio</span>
+                <span class="tool">NPU Inference</span>
+                <span class="tool">Model Quantization</span>
+                <span class="tool">BigQuery</span>
+                <span class="tool">Figma</span>
+                <span class="tool">User Research</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAYER × PURDUE -->
+      <div class="htl-node" style="min-width:260px">
+        <div class="htl-dot" style="border-color:var(--rust)"></div>
+        <div class="htl-year">Aug 2024<span>  Dec 2024</span></div>
+        <div class="htl-content">
+          
+          <div class="htl-role" style="margin-top:4px">PM Consulting · Healthcare AI</div>
+          <div class="htl-tools">
+            <span class="tool">Tableau</span>
+            <span class="tool">SQL</span>
+            <span class="tool">Power BI</span>
+            <span class="tool">Journey Mapping</span>
+            <span class="tool">KPI Framework</span>
+            <span class="tool">Figma</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASKIN ASTROLOGY -->
+      <div class="htl-node" style="min-width:260px">
+        <div class="htl-dot" style="border-color:var(--gold)"></div>
+        <div class="htl-year">Jan 2025<span>  Feb 2026</span></div>
+        <div class="htl-content">
+          
+          <div class="htl-co" style="color:var(--gold)">Askin Astrology</div>
+          <div class="htl-role">Tech PM · Consulting · RAG AI</div>
+          <div class="htl-tools">
+            <span class="tool">RAG Architecture</span>
+            <span class="tool">OpenAI API</span>
+            <span class="tool">Claude API</span>
+            <span class="tool">Semantic Caching</span>
+            <span class="tool">A/B Testing</span>
+            <span class="tool">Mixpanel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PURDUE GRADUATION -->
+      <div class="htl-node grad" style="min-width:220px">
+        <div class="htl-year" style="color:var(--gold);font-weight:700">May 2026</div>
+        <div class="htl-content">
+          
+          <div class="htl-co" style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem">Purdue University</div>
+          <div class="htl-role" style="color:var(--gold);border-color:rgba(181,133,10,0.3);background:rgba(181,133,10,0.06)">M.S. Engineering Management</div>
+          <div style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--dim);margin-top:4px;letter-spacing:0.06em">GPA 3.7/4.0 · West Lafayette, IN</div>
+          <div class="avail" style="margin-top:10px;font-size:10px;padding:5px 10px">
+            <span class="avail-dot"></span>Open to full-time roles
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO CARDS -->
+<section class="wrap" id="work">
+  <div class="inner">
+    <div class="sec-head"><span class="sec-kick">AI PM Portfolio</span><h2>What I've <em>built</em></h2></div>
+    <p class="cards-intro">5 pieces of original research and product thinking each examining a different dimension of on-device AI.</p>
+    <div class="pgrid">
+
+      <a href="on-device-ai-case-study.html" class="pcard card-01 card-wide">
+        <div class="pcard-bg"></div>
+        <div class="pcard-inner">
+          <div class="pcard-type" style="color:#7b9ff0">Competitive Case Study</div>
+          <div class="pcard-co"><span class="co-tag">Samsung</span><span class="co-tag">Google</span><span class="co-tag">Apple</span></div>
+          </div>
+          <div class="pcard-title">On-Device AI Samsung vs Google vs Apple</div>
+          <div class="pcard-desc">Voice transcription and on-device LLM compared across all three platforms. Execution models, privacy architecture, developer APIs, and strategic tradeoffs.</div>
+          <div class="pcard-footer"><span class="pcard-tag">Verified 2026 · 5 dimensions</span><div class="pcard-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div></div>
+        </div>
+      </a>
+
+      <a href="prd-ondevice-recommendations.html" class="pcard card-02">
+        <div class="pcard-bg"></div>
+        <div class="pcard-inner">
+          <div class="pcard-type" style="color:#ff6b6b">Product Requirements Document</div>
+          <div class="pcard-co"><span class="co-tag">Netflix</span><span class="co-tag">Prime Video</span></div>
+          </div>
+          <div class="pcard-title">On-Device Recommendations LocalLens PRD</div>
+          <div class="pcard-desc">Full PRD for an offline-first recommendation layer. Two-tower model, federated learning, 7 sections with user stories and 18-month roadmap.</div>
+          <div class="pcard-footer"><span class="pcard-tag">7 sections · Draft v1.0</span><div class="pcard-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div></div>
+        </div>
+      </a>
+
+      <a href="teardown-apple-notes.html" class="pcard card-03">
+        <div class="pcard-bg"></div>
+        <div class="pcard-inner">
+          <div class="pcard-type" style="color:#a8b4c8">Feature Teardown</div>
+          <div class="pcard-co"><span class="co-tag">Apple</span></div>
+          </div>
+          <div class="pcard-title">Apple Notes Transcription + SpeechAnalyzer</div>
+          <div class="pcard-desc">6 dimensions scored, 4 verified gaps, 3 prioritized fixes. What Apple got right in iOS 26 and what a PM would fix first.</div>
+          <div class="pcard-footer"><span class="pcard-tag">iOS 26 · SpeechAnalyzer</span><div class="pcard-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div></div>
+        </div>
+      </a>
+
+      <a href="prioritization-gemini-nano.html" class="pcard card-04">
+        <div class="pcard-bg"></div>
+        <div class="pcard-inner">
+          <div class="pcard-type" style="color:#74a7ff">Feature Prioritization</div>
+          <div class="pcard-co"><span class="co-tag">Google</span></div>
+          </div>
+          <div class="pcard-title">Gemini Nano Backlog What to Build Next</div>
+          <div class="pcard-desc">8 features stack-ranked on Impact × Strategic Fit × Feasibility with explicit tradeoffs and open decisions.</div>
+          <div class="pcard-footer"><span class="pcard-tag">ICE framework · 8 features</span><div class="pcard-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div></div>
+        </div>
+      </a>
+
+      <a href="metrics-locallens.html" class="pcard card-05 card-wide">
+        <div class="pcard-bg"></div>
+        <div class="pcard-inner">
+          <div class="pcard-type" style="color:#52b788">Live Metrics Dashboard</div>
+          <div class="pcard-co"><span class="co-tag">Netflix</span><span class="co-tag">Prime Video</span></div>
+          </div>
+          <div class="pcard-title">LocalLens Success Metrics Interactive Dashboard</div>
+          <div class="pcard-desc">Live Chart.js dashboard with 8 metrics (North Star, Primary, Guardrail) plus a scenario simulator to model Phase 2 exit readiness in real time.</div>
+          <div class="pcard-footer"><span class="pcard-tag">8 metrics · Scenario simulator</span><div class="pcard-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="wrap" id="skills">
+  <div class="inner">
+    <div class="sec-head"><span class="sec-kick">Expertise</span><h2>What I <em>bring</em></h2></div>
+    <div class="skills-grid" style="margin-top:2rem">
+      <div class="sk-card"><div class="sk-lbl">On-Device AI &amp; Edge</div><div class="tags"><span class="tag">On-Device LLM Inference</span><span class="tag">NPU Pipeline Optimization</span><span class="tag">Edge AI Deployment</span><span class="tag">Model Quantization</span><span class="tag">Hardware–SW Tradeoffs</span><span class="tag">Exynos AI Studio</span></div></div>
+      <div class="sk-card"><div class="sk-lbl">AI &amp; GenAI Systems</div><div class="tags"><span class="tag">RAG Architecture</span><span class="tag">LLM Fundamentals</span><span class="tag">Semantic Caching</span><span class="tag">Hallucination Guardrails</span><span class="tag">Prompt Design</span><span class="tag">OpenAI API</span><span class="tag">Claude API</span></div></div>
+      <div class="sk-card"><div class="sk-lbl">Product &amp; Strategy</div><div class="tags"><span class="tag">PRD Writing</span><span class="tag">Product Roadmapping</span><span class="tag">A/B Testing</span><span class="tag">Stakeholder Management</span><span class="tag">GTM Strategy</span><span class="tag">Jira</span><span class="tag">Figma</span><span class="tag">Notion</span></div></div>
+      <div class="sk-card"><div class="sk-lbl">Data &amp; Metrics</div><div class="tags"><span class="tag">Telemetry Analysis</span><span class="tag">SQL · BigQuery</span><span class="tag">Tableau · Power BI</span><span class="tag">Mixpanel · Looker</span><span class="tag">Python</span><span class="tag">Experimentation</span></div></div>
+    </div>
+    <div class="cert-strip">
+      <span class="cert">✓ PMP</span><span class="cert">✓ CSPO</span><span class="cert">✓ CSM</span>
+      <span class="cert" style="background:rgba(27,42,74,0.07);border-color:rgba(27,42,74,0.2);color:var(--navy)">★ Dean's Excellence Scholarship · Ranked 1st Undergraduate</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-name">Shreelaxmi <em>Ganesh</em></div>
+  <div class="foot-links">
+    <a href="mailto:shreelaxmiganesh2001@gmail.com">shreelaxmiganesh2001@gmail.com</a>
+    <a href="https://www.linkedin.com/in/shreelaxmi-ganesh/" target="_blank">LinkedIn</a>
+    <a href="index.html">Portfolio</a>
+    <span style="font-family:'Courier Prime',monospace;font-size:10px;color:rgba(255,255,255,0.2)">+1 (765) 767-3053</span>
+  </div>
+</footer>
+
+</body>
+</html>
